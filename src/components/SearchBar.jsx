@@ -3,7 +3,7 @@ import Button from "./common/button";
 import { jobTypes } from "@/constants/jobTypes";
 
 function SearchBar({ searchFn }) {
-    const [ keyword, setKeyword ] = useState('');
+    const [ searchWord, setSearchWord ] = useState('');
     const [ searchType, setSearchType ] = useState('');
 
     const handleSearch = () => {
@@ -18,34 +18,44 @@ function SearchBar({ searchFn }) {
         console.log(type)
     };
 
+    const handleSearchWordChange = async (e) => {
+        const word = e.target.value;
+        setSearchWord(e.target.value) 
+        console.log(word)
+    };
+
+
+
 
     return (
         <div className="flex gap-2">
-            <select
-                id="type"
-                defaultValue=""
-                onChange={(e) => setSearchType(e.target.value) }
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-                <option value="">Choose a type</option>
-                {jobTypes.map(({ type }) => (
-                <option key={type} value={type}>
-                    {type}
-                </option>
-                ))}
-            </select>
+            <form>
+                <select
+                    id="type"
+                    defaultValue=""
+                    onChange={(e) => setSearchType(e.target.value) }
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                    <option value="">Choose a type</option>
+                    {jobTypes.map(({ type }) => (
+                    <option key={type} value={type}>
+                        {type}
+                    </option>
+                    ))}
+                </select>
 
-        
-            <input
-                type="text"
-                placeholder="Type here" 
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                value={keyword}
-                onChange={(e) => setKeyword(e.target.value) } />
             
-            <Button onClick={() => handleSearch()}>
-                Search
-            </Button>
+                <input
+                    type="text"
+                    placeholder="Type here" 
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    value={searchWord}
+                    onChange={handleSearchWordChange} />
+                
+                <Button onClick={() => handleSearch()}>
+                    Search
+                </Button>
+            </form>
         </div>
 
     )
