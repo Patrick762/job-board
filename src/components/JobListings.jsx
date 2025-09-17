@@ -13,17 +13,19 @@ const JobListings = ({ isHome = false }) => {
   const [hasPrev, setHasPrev] = useState(false);
   const [currentLocation, setCurrentLocation] = useState("");
   
-  const [jobTitle, setJobTitle] = useState("");
+
   const [jobType, setJobType] = useState("");
 
   const fetchJobs = async () => {
     try {
+      const type = jobType ? `&type=${jobType}` : '';
+      const location = currentLocation ? `location.city=${currentLocation}` : '';
       const apiURL = isHome
         ? "/api/jobs?_limit=3"
-        : `/api/jobs?location.city=${currentLocation}&type=${jobType}&_page=${page}&_per_page=6`;
+        : `/api/jobs?${location}${type}&_page=${page}&_per_page=6`;
       const res = await fetch(apiURL);
       const data = await res.json();
-      setJobs(isHome ? data : data.data);
+      setJobs(data );
       setHasNext(data.next);
       setHasPrev(data.prev);
     } catch (error) {
@@ -33,16 +35,18 @@ const JobListings = ({ isHome = false }) => {
     }
   };
 
-  const searchJobs = async ( title, type ) => {
+  const searchJobs = async ( word ) => {
     try {
-      setJobTitle( title );
-      setJobType( type );
 
       //const apiURL = `/api/jobs?title_like=${title}&_page=${page}&_per_page=6`;
-      const apiURL = `/api/jobs?location.city=${currentLocation}&type=${jobType}&_page=${page}&_per_page=6`;
+      const type = jobType ? `&type=${jobType}` : '';
+      const location = currentLocation ? `location.city=${currentLocation}` : '';
+      const query = word ? `&q=${word}` : '';
+      
+      const apiURL = `/api/jobs?${location}${type}${query}&_page=${page}&_per_page=6`;
       const res = await fetch(apiURL);
       const data = await res.json();
-      setJobs(data.data);
+      setJobs(data);
       setHasNext(data.next);
       setHasPrev(data.prev);
     } catch (error) {
@@ -66,8 +70,7 @@ const JobListings = ({ isHome = false }) => {
   };
 
   const handleChange = async (e) => {
-    const city = e.target.value;
-    setCurrentLocation(city);
+    setCurrentLocation(e.target.value);
   };
   return (
     <section className="bg-blue-50 px-4 py-10">
@@ -81,7 +84,7 @@ const JobListings = ({ isHome = false }) => {
           <>
             <div className="flex justify-end my-5 gap-5">
               <div className="w-lg">
-                <SearchBar searchFn={searchJobs} />
+                <SearchBar searchFn={searchJobs} setJobType={setJobType} jobType={jobType}  />
               </div>
             </div>
 

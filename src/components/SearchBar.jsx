@@ -2,27 +2,19 @@ import { useState, useEffect } from "react";
 import Button from "./common/button";
 import { jobTypes } from "@/constants/jobTypes";
 
-function SearchBar({ searchFn }) {
+function SearchBar({ searchFn, setJobType, jobType }) {
     const [ searchWord, setSearchWord ] = useState('');
-    const [ searchType, setSearchType ] = useState('');
 
     const handleSearch = () => {
-        console.log( keyword, searchType );
-        searchFn( keyword, searchType );
-        //console.log( 'handleSearch value', keyword )
-        //console.log( 'handleSearch e.target.value', e.target.value )
+        searchFn( searchWord );
     }
 
-    const handleTypeChange = async (e) => {
-        const type = e.target.value;
-        console.log(type)
-    };
 
     const handleSearchWordChange = async (e) => {
-        const word = e.target.value;
+        
         setSearchWord(e.target.value) 
-        console.log(word)
     };
+
 
 
 
@@ -32,8 +24,8 @@ function SearchBar({ searchFn }) {
             <form>
                 <select
                     id="type"
-                    defaultValue=""
-                    onChange={(e) => setSearchType(e.target.value) }
+                    value={jobType}
+                    onChange={(e) => setJobType(e.target.value) }
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                     <option value="">Choose a type</option>
