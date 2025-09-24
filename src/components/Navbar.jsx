@@ -30,6 +30,9 @@ const Navbar = () => {
                 <NavLink to="/add-job" className={linkClass}>
                   Add Job
                 </NavLink>
+                <NavLink to="/favourites" className={linkClass}>
+                  Favourites
+                </NavLink>
               </div>
             </div>
           </div>

@@ -12,6 +12,7 @@ import JobPage from "./pages/JobPage";
 import jobLoader from "./pages/jobLoader";
 import AddJobPage from "./pages/AddJobPage";
 import EditJobPage from "./pages/EditJobPage";
+import FavouritesPage from "./pages/FavoritesPage";
 
 const App = () => {
   async function addJob(newJob) {
@@ -59,6 +60,7 @@ const App = () => {
           element={<EditJobPage updateJobSubmit={updateJob} />}
           loader={jobLoader}
         />
+        <Route path="/favourites" element={<FavouritesPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     )

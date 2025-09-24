@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { FaMapMarker } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import FavoriteButton from "./FavoriteButton";
 
-const JobListing = ({ job }) => {
+const JobListing = ({ job, onFavoriteButtonClick }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   let description = job.description;
@@ -14,7 +15,10 @@ const JobListing = ({ job }) => {
     <div className="bg-white rounded-xl shadow-md relative">
       <div className="p-4">
         <div className="mb-6">
-          <div className="text-gray-600 my-2">{job.type}</div>
+          <div className="flex">
+            <div className="text-gray-600 my-2">{job.type}</div>
+            <FavoriteButton job={job} className="ml-auto cursor-pointer" onButtonClick={onFavoriteButtonClick} />
+          </div>
           <h3 className="text-xl font-bold">{job.title}</h3>
         </div>
 
